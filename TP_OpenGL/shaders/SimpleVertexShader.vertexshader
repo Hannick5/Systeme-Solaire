@@ -1,0 +1,26 @@
+#version 330 core
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 1) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexNormal_modelspace;
+
+out vec2 UV;
+out vec4 Normal_worldspace;
+out vec4 LightDirection_worldspace;
+out vec4 cameraDirection_worldspace;
+
+uniform mat4 MVP;
+uniform mat4 M;
+uniform vec3 LightPosition_worldspace;
+uniform vec3 cameraPosition_worldspace;
+
+void main(){
+    gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
+    UV = vertexUV;
+
+    vec3 positionObj;
+    positionObj = vec3(M*vec4(vertexPosition_modelspace,1));
+    Normal_worldspace = (M * vec4(vertexNormal_modelspace,0));
+
+    LightDirection_worldspace = vec4(LightPosition_worldspace - positionObj, 0);
+    cameraDirection_worldspace = vec4(cameraPosition_worldspace - positionObj, 0);
+}
