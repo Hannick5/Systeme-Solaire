@@ -20,6 +20,9 @@ using namespace std;
 
 int main()
 {
+
+    //Chemins relatifs des fichiers utiles
+
     string path = filesystem::current_path().parent_path().string();
     string pathObj1 = filesystem::current_path().parent_path().string() + "/obj/sphere.obj";
     string pathObj2 = filesystem::current_path().parent_path().string() + "/obj/circle.obj";
@@ -123,7 +126,7 @@ int main()
     Object mars(pathObjSphere, path + "/textures/2k_mars.jpg", glm::vec3(scaleMars));
     Object jupiter(pathObjSphere, path + "/textures/2k_jupiter.jpg", glm::vec3(scaleJupiter));
     Object saturne(pathObjSphere, path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
-    Object saturneRing(pathObjRing, path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
+    Object saturneRing(pathObjRing, path + "/textures/2k_saturn_ring_alpha.png", glm::vec3(scaleSaturn));
     Object uranus(pathObjSphere, path + "/textures/2k_uranus.jpg", glm::vec3(scaleUranus));
     Object neptune(pathObjSphere, path + "/textures/2k_neptune.jpg", glm::vec3(scaleNeptune));
     Object lune(pathObjSphere, path + "/textures/2k_moon.jpg", glm::vec3(scaleMoon));
@@ -173,6 +176,8 @@ float distanceSoleilNeptune = 30.05f;  // 30.05 UA
 
 float scale = 10.0f;  // Échelle : 1 unité = 1000 km
 
+// Distances mises à l'échelle
+
 float distanceSoleilMercureScaled = distanceSoleilMercure * scale;
 float distanceSoleilVenusScaled = distanceSoleilVenus * scale;
 float distanceSoleilTerreScaled = distanceSoleilTerre * scale;
@@ -182,6 +187,8 @@ float distanceSoleilSaturneScaled = distanceSoleilSaturne * scale;
 float distanceSoleilUranusScaled = distanceSoleilUranus * scale;
 float distanceSoleilNeptuneScaled = distanceSoleilNeptune * scale;
 float distanceTerreLuneScaled = distanceTerreLune * scale;
+
+// Définition des vitesses de rotation
 
 float rotationSpeedTerre = 1.0f; // Facteur de vitesse de rotation pour la Terre
 float rotationSpeedMercure = 1.5f; // Facteur de vitesse de rotation pour Mercure
@@ -193,28 +200,30 @@ float rotationSpeedUranus = 0.1f; // Facteur de vitesse de rotation pour Uranus
 float rotationSpeedNeptune = 0.1f; // Facteur de vitesse de rotation pour Neptune
 float rotationSpeedLune = 2.0f; // Facteur de vitesse de rotation pour la Lune
 
-Object circleMercure(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilMercureScaled - 0.1f * distanceSoleilMercureScaled));
+// Définition des différentes orbites en tant que .obj
+
+Object circleMercure(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilMercureScaled));
 circleMercure.position = soleil.position;
 
-Object circleVenus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilVenusScaled - 0.1f * distanceSoleilVenusScaled));
+Object circleVenus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilVenusScaled));
 circleVenus.position = soleil.position;
 
-Object circleTerre(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilTerreScaled - 0.1f * distanceSoleilTerreScaled));
+Object circleTerre(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilTerreScaled));
 circleTerre.position = soleil.position;
 
-Object circleMars(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilMarsScaled - 0.1f * distanceSoleilMarsScaled));
+Object circleMars(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilMarsScaled));
 circleMars.position = soleil.position;
 
-Object circleJupiter(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilJupiterScaled - 0.1f * distanceSoleilJupiterScaled));
+Object circleJupiter(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilJupiterScaled));
 circleJupiter.position = soleil.position;
 
-Object circleSaturne(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilSaturneScaled - 0.1f * distanceSoleilSaturneScaled));
+Object circleSaturne(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilSaturneScaled));
 circleSaturne.position = soleil.position;
 
-Object circleUranus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilUranusScaled - 0.1f * distanceSoleilUranusScaled));
+Object circleUranus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilUranusScaled));
 circleUranus.position = soleil.position;
 
-Object circleNeptune(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilNeptuneScaled - 0.1f * distanceSoleilNeptuneScaled));
+Object circleNeptune(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(0.9f * distanceSoleilNeptuneScaled));
 circleNeptune.position = soleil.position;
 
 
@@ -226,7 +235,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     //soleil.rotationAngles.y=currentTime;
 
-    // Faire tourner o2 autour de o
+    // Définition de la rotation des différents astres
     
     terre.rotateAround(soleil, currentTime * rotationSpeedTerre, distanceSoleilTerreScaled);
     mercure.rotateAround(soleil, currentTime * rotationSpeedMercure, distanceSoleilMercureScaled);
@@ -242,7 +251,6 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     controls.update(deltaTime, &shader);
     cam.computeMatrices(width, height);
 
-    
     v = cam.getViewMatrix();
     p = cam.getProjectionMatrix();
 
@@ -253,13 +261,8 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     //shader.setUniform3fv("cameraPosition_worldspace", cam.position);
 
     pointLight.Bind(&shader);
-    
-    m = terre.getModelMatrix();
-    mvp = p * v * m;
-    shader.setUniformMat4f("MVP", mvp);
-    shader.setUniformMat4f("M", m);
 
-    renderer.Draw(va, terre, shader);
+    /////////////////////////Dessin des orbites/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Pour Mercure
     m = circleMercure.getModelMatrix();
@@ -275,7 +278,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     shader.setUniformMat4f("M", m);
     renderer.Draw(va, circleVenus, shader);
 
-    // Pour Terre
+    // Pour la Terre
     m = circleTerre.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -317,7 +320,17 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     shader.setUniformMat4f("M", m);
     renderer.Draw(va, circleNeptune, shader);
 
+    /////////////////////////Dessin des planètes/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // Pour la Terre
+    m = terre.getModelMatrix();
+    mvp = p * v * m;
+    shader.setUniformMat4f("MVP", mvp);
+    shader.setUniformMat4f("M", m);
+
+    renderer.Draw(va, terre, shader);
+
+    //Pour la Lune
     m = lune.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -325,6 +338,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, lune, shader);
 
+    // Pour Venus
     m = venus.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -332,6 +346,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, venus, shader);
 
+    // Pour Mercure
     m = mercure.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -339,6 +354,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, mercure, shader);
 
+    // Pour Jupiter
     m = jupiter.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -346,6 +362,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, jupiter, shader);
 
+    // Pour Neptune
     m = neptune.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -353,6 +370,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, neptune, shader);
 
+    // Pour Mars
     m = mars.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -360,6 +378,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, mars, shader);
 
+    // Pour Saturne
     m = saturne.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -367,6 +386,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, saturne, shader);
 
+    // Pour l'anneau de Saturne
     m = saturneRing.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -374,6 +394,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, saturneRing, shader);
 
+    // Pour Uranus
     m = uranus.getModelMatrix();
     mvp = p * v * m;
     shader.setUniformMat4f("MVP", mvp);
@@ -383,14 +404,21 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     shader.Unbind();
 
+    /////////////////////////Partie shader pour le soleil/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    Dans cette partie on Bind le deuxième shader créé car le soleil n'était pas éclairé correctement uniquemet avec un seul shader 
+    donc ici on lui applique uniquement une lumière ambiante contrairement aux autres planètes
+    */
     shaderSun.Bind();
 
+    // Pour le Soleil
     m = soleil.getModelMatrix();
     mvp = p*v*m;
     shaderSun.setUniformMat4f("MVP", mvp);
     shaderSun.setUniform3fv("pointLightColor", glm::vec3(1.0f, 1.0f, 1.0f));
     renderer.Draw(va, soleil, shaderSun);
 
+    // Pour l'espace
     m = espace.getModelMatrix();
     mvp = p * v * m;
     shaderSun.setUniformMat4f("MVP", mvp);
