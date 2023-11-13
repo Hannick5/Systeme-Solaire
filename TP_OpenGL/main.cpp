@@ -14,14 +14,21 @@
 #include "navigationcontrols.h"
 #include "ambientlight.h"
 #include "pointlight.h"
-
+#include <filesystem>
 
 using namespace std;
 
 int main()
 {
-    string path = "/home/hannick/Téléchargements/TP_OpenGL";
-    const char* pathObj = "/home/hannick/Téléchargements/TP_OpenGL/obj";
+    string path = filesystem::current_path().parent_path().string();
+    string pathObj1 = filesystem::current_path().parent_path().string() + "/obj/sphere.obj";
+    string pathObj2 = filesystem::current_path().parent_path().string() + "/obj/circle.obj";
+    string pathObj3 = filesystem::current_path().parent_path().string() + "/obj/ring.obj";
+
+    const char* pathObjSphere = pathObj1.c_str();
+    const char* pathObjCercle = pathObj2.c_str();
+    const char* pathObjRing = pathObj3.c_str();
+
 /////////////////////////Initialisation de GLFW/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     if(!glfwInit()){
@@ -107,19 +114,19 @@ int main()
     float scaleUranus = 4.007f;
     float scaleNeptune = 3.883f;
 
-    Object espace("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_stars_milky_way.jpg", glm::vec3(900.0f));
+    Object espace(pathObjSphere, path + "/textures/2k_stars_milky_way.jpg", glm::vec3(900.0f));
     // Objets pour les planètes
-    Object soleil("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_sun.jpg", glm::vec3(scaleSun));
-    Object mercure("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_mercury.jpg", glm::vec3(scaleMercury));
-    Object venus("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_venus_atmosphere.jpg", glm::vec3(scaleVenus));
-    Object terre("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_earth_daymap.jpg", glm::vec3(scaleEarth));
-    Object mars("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_mars.jpg", glm::vec3(scaleMars));
-    Object jupiter("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_jupiter.jpg", glm::vec3(scaleJupiter));
-    Object saturne("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
-    Object saturneRing("/home/hannick/Téléchargements/TP_OpenGL/obj/ring.obj", path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
-    Object uranus("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_uranus.jpg", glm::vec3(scaleUranus));
-    Object neptune("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_neptune.jpg", glm::vec3(scaleNeptune));
-    Object lune("/home/hannick/Téléchargements/TP_OpenGL/obj/sphere.obj", path + "/textures/2k_moon.jpg", glm::vec3(scaleMoon));
+    Object soleil(pathObjSphere, path + "/textures/2k_sun.jpg", glm::vec3(scaleSun));
+    Object mercure(pathObjSphere, path + "/textures/2k_mercury.jpg", glm::vec3(scaleMercury));
+    Object venus(pathObjSphere, path + "/textures/2k_venus_atmosphere.jpg", glm::vec3(scaleVenus));
+    Object terre(pathObjSphere, path + "/textures/2k_earth_daymap.jpg", glm::vec3(scaleEarth));
+    Object mars(pathObjSphere, path + "/textures/2k_mars.jpg", glm::vec3(scaleMars));
+    Object jupiter(pathObjSphere, path + "/textures/2k_jupiter.jpg", glm::vec3(scaleJupiter));
+    Object saturne(pathObjSphere, path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
+    Object saturneRing(pathObjRing, path + "/textures/2k_saturn.jpg", glm::vec3(scaleSaturn));
+    Object uranus(pathObjSphere, path + "/textures/2k_uranus.jpg", glm::vec3(scaleUranus));
+    Object neptune(pathObjSphere, path + "/textures/2k_neptune.jpg", glm::vec3(scaleNeptune));
+    Object lune(pathObjSphere, path + "/textures/2k_moon.jpg", glm::vec3(scaleMoon));
     
 /////////////////////////Création de la matrice MVP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -186,28 +193,28 @@ float rotationSpeedUranus = 0.1f; // Facteur de vitesse de rotation pour Uranus
 float rotationSpeedNeptune = 0.1f; // Facteur de vitesse de rotation pour Neptune
 float rotationSpeedLune = 2.0f; // Facteur de vitesse de rotation pour la Lune
 
-Object circleMercure("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilMercureScaled - 0.1f * distanceSoleilMercureScaled));
+Object circleMercure(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilMercureScaled - 0.1f * distanceSoleilMercureScaled));
 circleMercure.position = soleil.position;
 
-Object circleVenus("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilVenusScaled - 0.1f * distanceSoleilVenusScaled));
+Object circleVenus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilVenusScaled - 0.1f * distanceSoleilVenusScaled));
 circleVenus.position = soleil.position;
 
-Object circleTerre("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilTerreScaled - 0.1f * distanceSoleilTerreScaled));
+Object circleTerre(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilTerreScaled - 0.1f * distanceSoleilTerreScaled));
 circleTerre.position = soleil.position;
 
-Object circleMars("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilMarsScaled - 0.1f * distanceSoleilMarsScaled));
+Object circleMars(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilMarsScaled - 0.1f * distanceSoleilMarsScaled));
 circleMars.position = soleil.position;
 
-Object circleJupiter("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilJupiterScaled - 0.1f * distanceSoleilJupiterScaled));
+Object circleJupiter(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilJupiterScaled - 0.1f * distanceSoleilJupiterScaled));
 circleJupiter.position = soleil.position;
 
-Object circleSaturne("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilSaturneScaled - 0.1f * distanceSoleilSaturneScaled));
+Object circleSaturne(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilSaturneScaled - 0.1f * distanceSoleilSaturneScaled));
 circleSaturne.position = soleil.position;
 
-Object circleUranus("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilUranusScaled - 0.1f * distanceSoleilUranusScaled));
+Object circleUranus(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilUranusScaled - 0.1f * distanceSoleilUranusScaled));
 circleUranus.position = soleil.position;
 
-Object circleNeptune("/home/hannick/Téléchargements/TP_OpenGL/obj/circle.obj", path + "/textures/circle.jpg", glm::vec3(distanceSoleilNeptuneScaled - 0.1f * distanceSoleilNeptuneScaled));
+Object circleNeptune(pathObjCercle, path + "/textures/circle.jpg", glm::vec3(distanceSoleilNeptuneScaled - 0.1f * distanceSoleilNeptuneScaled));
 circleNeptune.position = soleil.position;
 
 
@@ -243,7 +250,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     shader.Bind();
 
-    shader.setUniform3fv("cameraPosition_worldspace", cam.position);
+    //shader.setUniform3fv("cameraPosition_worldspace", cam.position);
 
     pointLight.Bind(&shader);
     

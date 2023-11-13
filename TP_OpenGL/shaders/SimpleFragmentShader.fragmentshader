@@ -3,7 +3,7 @@
 in vec2 UV;
 in vec4 Normal_worldspace;
 in vec4 LightDirection_worldspace;
-in vec4 cameraDirection_worldspace;
+//in vec4 cameraDirection_worldspace;
 
 uniform sampler2D myTextureSampler;
 uniform vec3 pointLightColor;
@@ -17,16 +17,16 @@ void main(){
 
     vec4 n = normalize(Normal_worldspace);
     vec4 l = normalize(LightDirection_worldspace);
-    vec4 v = normalize(cameraDirection_worldspace);
+    //vec4 v = normalize(cameraDirection_worldspace);
 
     float cosTheta = clamp(dot(l,n), 0,1);
 
     vec4 r = reflect(-l,n);
-    float cosAlpha = clamp(dot(r,v), 0,1);
+    //float cosAlpha = clamp(dot(r,v), 0,1);
 
     vec3 ambient = pointLightColor/10;
     vec3 diffuse = pointLightColor * cosTheta/3;
-    vec3 specular = pointLightColor * pow(cosAlpha, 5)/10;
+    //vec3 specular = pointLightColor * pow(cosAlpha, 5)/10;
 
     float distance = length(LightDirection_worldspace);
     color = textureColor * (ambient+(diffuse)/(distance)*pointLightPower);
