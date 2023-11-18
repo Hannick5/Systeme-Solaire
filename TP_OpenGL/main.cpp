@@ -12,10 +12,13 @@
 #include "renderer.h"
 #include "camera.h"
 #include "navigationcontrols.h"
-#include "ambientlight.h"
 #include "pointlight.h"
 #include <filesystem>
 
+#include "imgui/imgui.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
+#include "userinterface.h"
 using namespace std;
 
 int main()
@@ -163,6 +166,11 @@ glDepthFunc(GL_LESS);
 float lastTime = glfwGetTime();
 float currentTime, deltaTime;
 
+// Initialisation de l'interface utilisateur
+
+UserInterface userInterface(window);
+
+
 // Définir la distance entre o et o2
 float distanceSoleilMercure = 0.39f;   // 0.39 UA
 float distanceSoleilVenus = 0.72f;     // 0.72 UA
@@ -237,16 +245,16 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     // Définition de la rotation des différents astres
     
-    terre.rotateAround(soleil, currentTime * rotationSpeedTerre, distanceSoleilTerreScaled);
-    mercure.rotateAround(soleil, currentTime * rotationSpeedMercure, distanceSoleilMercureScaled);
-    venus.rotateAround(soleil, currentTime * rotationSpeedVenus, distanceSoleilVenusScaled);
-    mars.rotateAround(soleil, currentTime * rotationSpeedMars, distanceSoleilMarsScaled);
-    jupiter.rotateAround(soleil, currentTime * rotationSpeedJupiter, distanceSoleilJupiterScaled);
-    saturne.rotateAround(soleil, currentTime * rotationSpeedSaturne, distanceSoleilSaturneScaled);
-    uranus.rotateAround(soleil, currentTime * rotationSpeedUranus, distanceSoleilUranusScaled);
-    neptune.rotateAround(soleil, currentTime * rotationSpeedNeptune, distanceSoleilNeptuneScaled);
+    terre.rotateAround(soleil, currentTime * rotationSpeedTerre * userInterface.rotationSpeedMultiplier, distanceSoleilTerreScaled);
+    mercure.rotateAround(soleil, currentTime * rotationSpeedMercure * userInterface.rotationSpeedMultiplier, distanceSoleilMercureScaled);
+    venus.rotateAround(soleil, currentTime * rotationSpeedVenus * userInterface.rotationSpeedMultiplier, distanceSoleilVenusScaled);
+    mars.rotateAround(soleil, currentTime * rotationSpeedMars * userInterface.rotationSpeedMultiplier, distanceSoleilMarsScaled);
+    jupiter.rotateAround(soleil, currentTime * rotationSpeedJupiter * userInterface.rotationSpeedMultiplier, distanceSoleilJupiterScaled);
+    saturne.rotateAround(soleil, currentTime * rotationSpeedSaturne * userInterface.rotationSpeedMultiplier, distanceSoleilSaturneScaled);
+    uranus.rotateAround(soleil, currentTime * rotationSpeedUranus * userInterface.rotationSpeedMultiplier, distanceSoleilUranusScaled);
+    neptune.rotateAround(soleil, currentTime * rotationSpeedNeptune * userInterface.rotationSpeedMultiplier, distanceSoleilNeptuneScaled);
     saturneRing.rotateAround(saturne, 0, 0);
-    lune.rotateAround(terre, currentTime * rotationSpeedLune, distanceTerreLuneScaled);
+    lune.rotateAround(terre, currentTime * rotationSpeedLune * userInterface.rotationSpeedMultiplier, distanceTerreLuneScaled);
 
     controls.update(deltaTime, &shader);
     cam.computeMatrices(width, height);
@@ -426,6 +434,8 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     renderer.Draw(va, espace, shaderSun);
 
     shaderSun.Unbind();
+
+    userInterface.render();
 
     //Swap buffers : frame refresh
     glfwSwapBuffers(window);
