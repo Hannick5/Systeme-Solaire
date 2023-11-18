@@ -257,6 +257,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     lune.rotateAround(terre, currentTime * rotationSpeedLune * userInterface.rotationSpeedMultiplier, distanceTerreLuneScaled);
 
     controls.update(deltaTime, &shader);
+
     cam.computeMatrices(width, height);
 
     v = cam.getViewMatrix();

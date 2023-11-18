@@ -170,6 +170,8 @@ void Object::rotateAround(Object& centerObject, float currentTime, float distanc
         centerObject.position.y, 
         distance * sin(currentTime) + centerObject.position.z
     );
-
-    this->getModelMatrix() = glm::translate(glm::mat4(1.0f), position) * glm::rotate(glm::mat4(1.0f), currentTime, glm::vec3(0.0f, 1.0f, 0.0f));
+    rotationAngles.y = currentTime;
 }
+
+
+    
