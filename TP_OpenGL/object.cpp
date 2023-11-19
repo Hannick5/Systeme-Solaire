@@ -54,6 +54,7 @@ Object::~Object()
 {
     delete m_vb;
     if (m_uvsb) delete m_uvsb;
+    if (m_normalsb) delete m_normalsb;
     if (m_texture) delete m_texture;
 }
 
