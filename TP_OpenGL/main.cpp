@@ -1,11 +1,9 @@
 #include <iostream>
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 #include <vector>
 #include <math.h>
-
 #include "vertexbuffer.h"
 #include "vertexarray.h"
 #include "shader.h"
@@ -14,7 +12,7 @@
 #include "navigationcontrols.h"
 #include "pointlight.h"
 #include <filesystem>
-
+#include <glm/gtx/io.hpp>
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_glfw.h"
 #include "imgui/backends/imgui_impl_opengl3.h"
@@ -121,8 +119,14 @@ int main()
     float scaleNeptune = 3.883f;
 
     Object espace(pathObjSphere, path + "/textures/2k_stars_milky_way.jpg", glm::vec3(900.0f));
+    espace.position.x = 0;
+    espace.position.y = 0;
+    espace.position.z = 0;
     // Objets pour les planètes
     Object soleil(pathObjSphere, path + "/textures/2k_sun.jpg", glm::vec3(scaleSun));
+    soleil.position.x = 0;
+    soleil.position.y = 0;
+    soleil.position.z = 0;
     Object mercure(pathObjSphere, path + "/textures/2k_mercury.jpg", glm::vec3(scaleMercury));
     Object venus(pathObjSphere, path + "/textures/2k_venus_atmosphere.jpg", glm::vec3(scaleVenus));
     Object terre(pathObjSphere, path + "/textures/2k_earth_daymap.jpg", glm::vec3(scaleEarth));
@@ -148,8 +152,6 @@ int main()
 /////////////////////////Lumière/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 PointLight pointLight(soleil.position, glm::vec3(1.0f, 1.0f, 1.0f), 50.0f);
-
-
 /////////////////////////Boucle de rendu/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -236,7 +238,7 @@ circleNeptune.position = soleil.position;
 
 
 while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window)){
-
+    
     currentTime = glfwGetTime();
     deltaTime = currentTime-lastTime;
     lastTime = currentTime;
@@ -279,7 +281,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     shader.setUniformMat4f("MVP", mvp);
     shader.setUniformMat4f("M", m);
     renderer.Draw(va, circleMercure, shader);
-
+    
     // Pour Venus
     m = circleVenus.getModelMatrix();
     mvp = p * v * m;
@@ -411,8 +413,6 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
 
     renderer.Draw(va, uranus, shader);
 
-    shader.Unbind();
-
     /////////////////////////Partie shader pour le soleil/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     Dans cette partie on Bind le deuxième shader créé car le soleil n'était pas éclairé correctement uniquemet avec un seul shader 
@@ -434,8 +434,6 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     shaderSun.setUniform3fv("pointLightColor", glm::vec3(1.0f, 1.0f, 1.0f));
     renderer.Draw(va, espace, shaderSun);
 
-    shaderSun.Unbind();
-
     userInterface.render();
 
     //Swap buffers : frame refresh
@@ -447,6 +445,7 @@ while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClos
     }
     //get the events
     glfwPollEvents();
+    
 }
 glfwTerminate();
 
