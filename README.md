@@ -36,7 +36,3 @@ Après la compilation, suivez ces étapes pour exécuter l'application :
     ```
     Remplacez `nom_de_sortie` par le nom que vous avez choisi pour le fichier exécutable.
 
-## Remarques
-- Assurez-vous d'ajuster les options de compilation en fonction des besoins de votre application.
-- Vous pouvez également ajouter des instructions supplémentaires ici si votre application nécessite des configurations spécifiques.
-
